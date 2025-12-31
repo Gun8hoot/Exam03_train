@@ -21,6 +21,11 @@ int nqueen(int *arr_int, int n, int col)
 	}
 }
 
+int queen_is_safe(int row, int col, )
+{
+
+}
+
 int	main(int argc, char **argv)
 {
 	int *pos = NULL;
@@ -32,7 +37,7 @@ int	main(int argc, char **argv)
 	pos = calloc(n, sizeof(int));
 	if (!pos)
 		return (0);
-	nqueen()
+	nqueen(pos, n, 0)
 
 	return (0);
 }

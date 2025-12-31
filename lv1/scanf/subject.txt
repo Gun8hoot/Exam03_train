@@ -1,38 +1,39 @@
-// NOT FINISHED !!
+Assignment name  : ft_scanf
+Expected files   : ft_scanf.c
+Allowed functions: fgetc, ungetc, ferror, feof, isspace, isdigit, stdin, va_start, va_arg, va_copy, va_end
+--------------------------------------------------------------------------------
+
+
+Write a function named `ft_scanf` that will mimic the real scanf with the following constraints:
+
+- It will manage only the following conversions: s, d, and c
+- You don't have to handle the options *, m and '
+- You don't have to handle the maximum field width
+- You don't have to handle the types modifier characters (h, hh, l, etc.)
+- You don't have to handle the conversions beginning with %n$
+
+Your function must be declared as follows:
+
+int ft_scanf(const char *, ... );
+
+You will find in this directory a file containing a part of the code you will need, you just have to complete it.
+
+To test your program compare your results with the real scanf.
+
+Hint : You may need to read the man of scanf.
 
 #include <stdarg.h>
 #include <stdio.h>
 #include <ctype.h>
 
-int	ft_atoi(char *str)
-{
-	int nb = 0;
-	int sign = 1;
-	int i = 0;
-
-	if (!str)
-		return (0);
-	if (nb[0] == '-')
-		sign = -sign;
-	while (str[i])
-	{
-		if (!(str[i] > '0' && str[i] < '9'))
-			return (0);
-		nb = nb * 10 + (str[i] - '0');
-		i++;
-	}
-	return (sign * nb);
-}
-
 int match_space(FILE *f)
 {
-    
+        // You may insert code here
     return (0);
 }
 
 int match_char(FILE *f, char c)
 {
-
         // You may insert code here
     return (0);
 }
@@ -45,21 +46,13 @@ int scan_char(FILE *f, va_list ap)
 
 int scan_int(FILE *f, va_list ap)
 {
-    
+        // You may insert code here
     return (0);
 }
 
 int scan_string(FILE *f, va_list ap)
 {
-	char *str = va_arg(ap, char *);
-	char  c;
-	int	  i = 0;
-
-	while (ap[i])
-	{
-		ungetc(ap[i], stdin);
-		i++;
-	}
+        // You may insert code here
     return (0);
 }
 
@@ -86,11 +79,15 @@ int	match_conv(FILE *f, const char **format, va_list ap)
 int ft_vfscanf(FILE *f, const char *format, va_list ap)
 {
 	int nconv = 0;
-	char *str;
+
+	int c = fgetc(f);
+	if (c == EOF)
+		return EOF;
+	ungetc(c, f);
 
 	while (*format)
 	{
-		if (*format == '%' && *format + 1 != '\0')
+		if (*format == '%')
 		{
 			format++;
 			if (match_conv(f, &format, ap) != 1)
@@ -116,18 +113,8 @@ int ft_vfscanf(FILE *f, const char *format, va_list ap)
 
 int ft_scanf(const char *format, ...)
 {
-	va_list ap;
-
-	va_start(ap, format);
+	// ...
 	int ret = ft_vfscanf(stdin, format, ap);
-	va_end(ap);
+	// ...
 	return ret;
-}
-
-int main(void)
-{
-	char str[999];
-	char sss[999];
-	scanf("%s | %s", &str, &sss);
-	printf("%s | %s\n", str, sss);
 }
