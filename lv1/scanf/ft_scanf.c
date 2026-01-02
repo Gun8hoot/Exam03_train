@@ -1,66 +1,80 @@
-// NOT FINISHED !!
-
 #include <stdarg.h>
 #include <stdio.h>
 #include <ctype.h>
 
-int	ft_atoi(char *str)
-{
-	int nb = 0;
-	int sign = 1;
-	int i = 0;
-
-	if (!str)
-		return (0);
-	if (nb[0] == '-')
-		sign = -sign;
-	while (str[i])
-	{
-		if (!(str[i] > '0' && str[i] < '9'))
-			return (0);
-		nb = nb * 10 + (str[i] - '0');
-		i++;
-	}
-	return (sign * nb);
-}
-
 int match_space(FILE *f)
 {
-    
-    return (0);
+	char c;
+	while ((c = fgetc(f)) != EOF && isspace(c))
+		;
+	if (c != EOF)
+		ungetc(c, f);
+    return (1);
 }
 
 int match_char(FILE *f, char c)
 {
-
-        // You may insert code here
-    return (0);
+	char fgc = fgetc(f);
+	ungetc(fgc, f);
+	if (c == fgc)
+		return (1);
+    return (1);
 }
 
 int scan_char(FILE *f, va_list ap)
 {
-        // You may insert code here
-    return (0);
+	char *ptrc = va_arg(ap, char *);
+	int c = fgetc(f);
+	ungetc(c, f);
+	if (!isspace(c))
+		*ptrc = c;
+	else
+		return (0);
+	return (1);
 }
 
 int scan_int(FILE *f, va_list ap)
 {
-    
-    return (0);
+	int	  *ptri = va_arg(ap, int *);
+	int	  converted = 0;
+	int  c;
+
+	c = fgetc(f);
+	if (!isdigit(c))
+	{
+		ungetc(c, f);
+		return (0);
+	}
+	while (isdigit(c) && c != EOF)
+	{
+		converted = converted * 10 + (c - '0');
+		c = fgetc(f);
+	}
+	*ptri = converted;
+	ungetc(c, f);
+    return (1);
 }
 
 int scan_string(FILE *f, va_list ap)
 {
-	char *str = va_arg(ap, char *);
-	char  c;
+	char  *ptr = va_arg(ap, char *);
+	int	  c = fgetc(f);
 	int	  i = 0;
 
-	while (ap[i])
+	if (c == EOF || isspace(c))
 	{
-		ungetc(ap[i], stdin);
-		i++;
+		ungetc(c, f);
+		return (0);
 	}
-    return (0);
+	while (c != EOF && !isspace(c))
+	{
+		ptr[i] = c;
+		i++;
+		c = fgetc(f);
+	}
+	ptr[i] = '\0';
+	ungetc(c, f);
+    return (1);
 }
 
 
@@ -86,7 +100,6 @@ int	match_conv(FILE *f, const char **format, va_list ap)
 int ft_vfscanf(FILE *f, const char *format, va_list ap)
 {
 	int nconv = 0;
-	char *str;
 
 	while (*format)
 	{
@@ -126,8 +139,11 @@ int ft_scanf(const char *format, ...)
 
 int main(void)
 {
-	char str[999];
-	char sss[999];
-	scanf("%s | %s", &str, &sss);
-	printf("%s | %s\n", str, sss);
+	char  str[999];
+	char  sss[999];
+	int	  dig;
+	int	  dig2;
+	int	  dig3;
+	scanf("%d %s %d", &dig, &sss, &dig3);
+	printf("%d %s %d\n", dig, sss, dig3);
 }

@@ -53,7 +53,7 @@ int main(int argc, char **argv)
 		while (memmem(str, strlen(str), "\n", 1) == NULL)
 		{
 			sz = read(0, &buff, BUFFER_SIZE);
-			if (!buff)
+			if (!buff[0])
 				return (1);
 			if (sz == 0)
 				break;
@@ -64,7 +64,7 @@ int main(int argc, char **argv)
 		{
 			if (str[i] == argv[1][0] && memmem(&str[i], strlen(argv[1]), argv[1], strlen(argv[1])))
 			{
-				for (int j = 0; j < strlen(argv[1]); j++)
+				for (size_t j = 0; j < strlen(argv[1]); j++)
 				{
 					str[i + j] = '*';
 				}
